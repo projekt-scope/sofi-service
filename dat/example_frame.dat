@@ -1,0 +1,40 @@
++prog aqua
+KOPF Material und Querschnitte
+
+ECHO VOLL 0
+QUER NR 1
+
+ENDE
+
++prog sofimshc
+KOPF
+
+SYST 2D GDIV 1000 NEGY
+
+STEU MESH 2
+STEU HMIN 1.0
+
+SPT NR   X  Y  FIX
+    1    0  0  PXPY
+    2    0  5
+    3    3  5
+    4    3  0  PXPY
+
+
+SLN NR NPA NPE QNR FIXA FIXE STYP
+    1   1   2  1   MM   MM   T
+    2   2   3  1   MM   MM   T
+    3   3   4  1   MM   MM   T
+    4   3   1  1   MM   MM   T
+
+ENDE
+
++prog sofiload
+KOPF
+LF 1
+POIN REF NODE NR 2 TYP PXX 10
+ENDE
+
++prog ase
+LF ALLE
+ENDE

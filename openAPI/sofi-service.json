@@ -1,0 +1,244 @@
+{
+    "openapi": "3.0.2",
+    "info": {
+        "title": "Sofi Service",
+        "description": "This API starts the calculation with SOFiSTiK.",
+        "version": "0.1"
+    },
+    "paths": {
+        "/dat2calculationfile/": {
+            "post": {
+                "summary": "Building 2 Dat File",
+                "description": "Start calculation from DAT and return directory of the result cdb\n@input: Dat-File\n@return: Name of CDB / directory where CDB is located",
+                "operationId": "building_2_dat_file_dat2calculationfile__post",
+                "requestBody": {
+                    "content": {
+                        "multipart/form-data": {
+                            "schema": {
+                                "$ref": "#/components/schemas/Body_building_2_dat_file_dat2calculationfile__post"
+                            }
+                        }
+                    }
+                },
+                "responses": {
+                    "200": {
+                        "description": "Successful Response",
+                        "content": {
+                            "application/json": {
+                                "schema": {}
+                            }
+                        }
+                    },
+                    "422": {
+                        "description": "Validation Error",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "$ref": "#/components/schemas/HTTPValidationError"
+                                }
+                            }
+                        }
+                    }
+                }
+            }
+        },
+        "/dat2result/frame": {
+            "post": {
+                "summary": "Dat 2 Result",
+                "description": "Calculate dat and return result-json (truss and node results)\n@input: dat\n@return: result-json",
+                "operationId": "dat_2_result_dat2result_frame_post",
+                "requestBody": {
+                    "content": {
+                        "multipart/form-data": {
+                            "schema": {
+                                "$ref": "#/components/schemas/Body_dat_2_result_dat2result_frame_post"
+                            }
+                        }
+                    }
+                },
+                "responses": {
+                    "200": {
+                        "description": "Successful Response",
+                        "content": {
+                            "application/json": {
+                                "schema": {}
+                            }
+                        }
+                    },
+                    "422": {
+                        "description": "Validation Error",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "$ref": "#/components/schemas/HTTPValidationError"
+                                }
+                            }
+                        }
+                    }
+                }
+            }
+        },
+        "/dat2result/building": {
+            "post": {
+                "summary": "Dat 2 Result Building",
+                "description": "Calculate 3D building dat and return result-json (for quad elements)\n@inupt: dat\n@return: result-json",
+                "operationId": "dat_2_result_building_dat2result_building_post",
+                "requestBody": {
+                    "content": {
+                        "multipart/form-data": {
+                            "schema": {
+                                "$ref": "#/components/schemas/Body_dat_2_result_building_dat2result_building_post"
+                            }
+                        }
+                    }
+                },
+                "responses": {
+                    "200": {
+                        "description": "Successful Response",
+                        "content": {
+                            "application/json": {
+                                "schema": {}
+                            }
+                        }
+                    },
+                    "422": {
+                        "description": "Validation Error",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "$ref": "#/components/schemas/HTTPValidationError"
+                                }
+                            }
+                        }
+                    }
+                }
+            }
+        },
+        "/returnResults/": {
+            "post": {
+                "summary": "Return Result",
+                "description": "Returns result to corresponding calculation id (wihtout starting calculation again)\n@input: id (json)\n@return: result-json (truss & node results)",
+                "operationId": "return_result_returnResults__post",
+                "requestBody": {
+                    "content": {
+                        "application/json": {
+                            "schema": {
+                                "$ref": "#/components/schemas/Result"
+                            }
+                        }
+                    },
+                    "required": true
+                },
+                "responses": {
+                    "200": {
+                        "description": "Successful Response",
+                        "content": {
+                            "application/json": {
+                                "schema": {}
+                            }
+                        }
+                    },
+                    "422": {
+                        "description": "Validation Error",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "$ref": "#/components/schemas/HTTPValidationError"
+                                }
+                            }
+                        }
+                    }
+                }
+            }
+        }
+    },
+    "components": {
+        "schemas": {
+            "Body_building_2_dat_file_dat2calculationfile__post": {
+                "title": "Body_building_2_dat_file_dat2calculationfile__post",
+                "type": "object",
+                "properties": {
+                    "dat_file": {
+                        "title": "Dat File",
+                        "type": "string",
+                        "format": "binary"
+                    }
+                }
+            },
+            "Body_dat_2_result_building_dat2result_building_post": {
+                "title": "Body_dat_2_result_building_dat2result_building_post",
+                "type": "object",
+                "properties": {
+                    "dat_file": {
+                        "title": "Dat File",
+                        "type": "string",
+                        "format": "binary"
+                    }
+                }
+            },
+            "Body_dat_2_result_dat2result_frame_post": {
+                "title": "Body_dat_2_result_dat2result_frame_post",
+                "type": "object",
+                "properties": {
+                    "dat_file": {
+                        "title": "Dat File",
+                        "type": "string",
+                        "format": "binary"
+                    }
+                }
+            },
+            "HTTPValidationError": {
+                "title": "HTTPValidationError",
+                "type": "object",
+                "properties": {
+                    "detail": {
+                        "title": "Detail",
+                        "type": "array",
+                        "items": {
+                            "$ref": "#/components/schemas/ValidationError"
+                        }
+                    }
+                }
+            },
+            "Result": {
+                "title": "Result",
+                "required": [
+                    "id"
+                ],
+                "type": "object",
+                "properties": {
+                    "id": {
+                        "title": "Id",
+                        "type": "string"
+                    }
+                }
+            },
+            "ValidationError": {
+                "title": "ValidationError",
+                "required": [
+                    "loc",
+                    "msg",
+                    "type"
+                ],
+                "type": "object",
+                "properties": {
+                    "loc": {
+                        "title": "Location",
+                        "type": "array",
+                        "items": {
+                            "type": "string"
+                        }
+                    },
+                    "msg": {
+                        "title": "Message",
+                        "type": "string"
+                    },
+                    "type": {
+                        "title": "Error Type",
+                        "type": "string"
+                    }
+                }
+            }
+        }
+    }
+}
